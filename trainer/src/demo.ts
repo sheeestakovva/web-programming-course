@@ -5,9 +5,7 @@ import {
   findTaskById,
 } from "./domain";
 
-// --- Входные данные ---
 
-// Задания ts-1 и react-1 из course/data/training-set.json со всеми полями.
 const webBasics: TrainingSet = {
   id: "web-basics",
   title: "Основы веб-программирования",
@@ -33,7 +31,6 @@ const webBasics: TrainingSet = {
   ],
 };
 
-// Второй набор с другими id и другой темой.
 const httpBasics: TrainingSet = {
   id: "http-basics",
   title: "Основы HTTP",
@@ -64,7 +61,7 @@ const emptySet: TrainingSet = {
   tasks: [],
 };
 
-// Ответы.
+
 const noAnswers: Answer[] = [];
 
 const oneAnswer: Answer[] = [
@@ -81,12 +78,10 @@ const blankTextAnswers: Answer[] = [
   { taskId: "react-1", kind: "short-text", text: "   " },
 ];
 
-// Ответ на задание из другого набора (чужой taskId).
 const foreignAnswers: Answer[] = [
   { taskId: "http-1", kind: "short-text", text: "Проверить response.ok" },
 ];
 
-// --- Вспомогательный вывод ---
 
 function show(label: string, value: unknown): void {
   console.log(`${label}:`, JSON.stringify(value));
@@ -96,11 +91,11 @@ function formatProgress(p: { answered: number; total: number }): string {
   return `${p.answered} из ${p.total}`;
 }
 
-// Снимки входов до вызовов функций, чтобы доказать отсутствие мутаций.
+
 const setBefore = JSON.stringify(webBasics);
 const answersBefore = JSON.stringify(fullAnswers);
 
-// --- Поиск по id ---
+
 console.log("=== Поиск задания по id ===");
 
 const foundTs = findTaskById(webBasics, "ts-1");
@@ -118,7 +113,7 @@ console.log(
 
 console.log("Поиск в пустом наборе:", findTaskById(emptySet, "ts-1"));
 
-// Сужение по kind: options доступны только после проверки.
+
 if (foundTs !== undefined && foundTs.kind === "single-choice") {
   show(
     "Варианты ts-1",
@@ -127,7 +122,7 @@ if (foundTs !== undefined && foundTs.kind === "single-choice") {
   console.log("Код ts-1 (только текст):", foundTs.code);
 }
 
-// --- Фильтр по теме ---
+
 console.log("\n=== Фильтр по topic ===");
 show(
   "typescript",
@@ -138,7 +133,7 @@ show("http во втором наборе", filterTasksByTopic(httpBasics, "http
 show("css (нет совпадений)", filterTasksByTopic(webBasics, "css"));
 show("пустой набор", filterTasksByTopic(emptySet, "typescript"));
 
-// --- Прогресс ---
+
 console.log("\n=== Прогресс ===");
 console.log("Пустой набор:", formatProgress(calculateProgress(emptySet, noAnswers)));
 console.log("Без ответов:", formatProgress(calculateProgress(webBasics, noAnswers)));
@@ -157,7 +152,7 @@ console.log(
   formatProgress(calculateProgress(httpBasics, foreignAnswers)),
 );
 
-// --- Неизменность входов ---
+
 console.log("\n=== Неизменность входов ===");
 console.log("Набор не изменился:", JSON.stringify(webBasics) === setBefore);
 console.log("Ответы не изменились:", JSON.stringify(fullAnswers) === answersBefore);

@@ -1,16 +1,14 @@
-// Типы данных тренажёра по контракту курса (версия формата 1).
 
 export type Option = {
   id: string;
   label: string;
 };
 
-// Поля, общие для всех заданий.
 type TaskBase = {
   id: string;
-  topic: string; // произвольная строка, не закрытый union
+  topic: string; 
   prompt: string;
-  code?: string; // текст для показа, не исполняется
+  code?: string; 
 };
 
 export type SingleChoiceTask = TaskBase & {
@@ -49,7 +47,6 @@ export type Progress = {
   total: number;
 };
 
-// Поиск задания по id. Если задания нет, возвращает undefined.
 export function findTaskById(
   set: TrainingSet,
   taskId: string,
@@ -57,12 +54,10 @@ export function findTaskById(
   return set.tasks.find((task) => task.id === taskId);
 }
 
-// Задания с указанной темой. Всегда новый массив, возможно пустой.
 export function filterTasksByTopic(set: TrainingSet, topic: string): Task[] {
   return set.tasks.filter((task) => task.topic === topic);
 }
 
-// Заполнен ли ответ. Текст из одних пробелов не считается заполненным.
 export function isAnswerFilled(answer: Answer): boolean {
   switch (answer.kind) {
     case "single-choice":
@@ -72,8 +67,7 @@ export function isAnswerFilled(answer: Answer): boolean {
   }
 }
 
-// Прогресс: сколько заданий набора имеют заполненный ответ, из общего числа.
-// Ответы на задания из другого набора (чужой taskId) не учитываются.
+
 export function calculateProgress(
   set: TrainingSet,
   answers: readonly Answer[],
