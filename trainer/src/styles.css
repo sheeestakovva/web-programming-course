@@ -1,0 +1,193 @@
+:root {
+  --green: #32650c;
+  --blue: #0c3244;
+  --blue-light: #ddf4ff;
+  --text: #3c3c3c;
+  --muted: #777777;
+  --line: #e5e5e5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: var(--text);
+  font-family: "Nunito", "Segoe UI", system-ui, sans-serif;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px 28px;
+  align-items: start;
+}
+
+main > h1 {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 20px 0;
+  background: var(--green);
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 800;
+  box-shadow: 0 0 0 100vmax var(--green);
+  clip-path: inset(0 -100vmax);
+}
+
+main > p {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  counter-reset: task;
+}
+
+.task-list li {
+  counter-increment: task;
+}
+
+.task-list button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  background: #ffffff;
+  border: 2px solid var(--line);
+  border-bottom-width: 4px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.task-list button::before {
+  content: counter(task);
+  flex: 0 0 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--line);
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.task-list button:hover {
+  background: #f7f7f7;
+}
+
+.task-list button:active {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+}
+
+.task-list button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.task-list button[aria-pressed="true"] {
+  background: var(--blue-light);
+  border-color: var(--blue);
+}
+
+.task-list button[aria-pressed="true"]::before {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.task-card {
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.task-card > p:first-child {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--green);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.task-card h2 {
+  margin: 0 0 18px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.task-card pre {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  background: #f7f7f7;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  font-size: 15px;
+  white-space: pre-wrap;
+   word-break: break-word;
+}
+
+.task-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.task-card li {
+  padding: 14px 16px;
+  border: 2px solid var(--line);
+  border-bottom-width: 4px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.task-card > p:last-child {
+  margin: 0;
+  padding: 14px 16px;
+  background: var(--blue-light);
+  border-radius: 12px;
+  color: #1899d6;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  main > h1 {
+    font-size: 21px;
+  }
+
+  .task-card {
+    padding: 18px;
+  }
+}
