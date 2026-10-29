@@ -1,10 +1,12 @@
-import type { Task } from "./domain";
+import type { Answer, Task } from "./domain";
 
 type TaskCardProps = {
   task: Task;
+  answer: Answer | undefined;
+  onAnswer: (answer: Answer) => void;
 };
 
-export function TaskCard({ task }: TaskCardProps) {
+export function TaskCard({ task, answer, onAnswer }: TaskCardProps) {
   return (
     <article className="task-card">
       <p>Тема: {task.topic}</p>
@@ -12,16 +14,45 @@ export function TaskCard({ task }: TaskCardProps) {
 
       {task.code !== undefined && <pre>{task.code}</pre>}
 
-      {task.kind === "single-choice" ? (
-        <ul>
+            {task.kind === "single-choice" ? (
+        <fieldset>
+          <legend>Выберите один вариант</legend>
           {task.options.map((option) => (
-            <li key={option.id}>
+            <label key={option.id} className="option">
+              <input
+                type="radio"
+                name={task.id}
+                checked={
+                  answer?.kind === "single-choice" &&
+                  answer.optionId === option.id
+                }
+                onChange={() =>
+                  onAnswer({
+                    taskId: task.id,
+                    kind: "single-choice",
+                    optionId: option.id,
+                  })
+                }
+              />
               {option.id}) {option.label}
-            </li>
+            </label>
           ))}
-        </ul>
+        </fieldset>
       ) : (
-        <p>Это задание с текстовым ответом.</p>
+        <label className="text-answer">
+          Ваш ответ
+          <textarea
+            rows={5}
+            value={answer?.kind === "short-text" ? answer.text : ""}
+            onChange={(event) =>
+              onAnswer({
+                taskId: task.id,
+                kind: "short-text",
+                text: event.target.value,
+              })
+            }
+          />
+        </label>
       )}
     </article>
   );
